@@ -36,18 +36,20 @@ def get_tangent_line(at_x, xs):
 
 
 # %%
-xs = np.arange(-3, 0.1, 0.01)
+xs = np.arange(-4, 0.1, 0.01)
 ys = f(xs)
 
 # %%
 
-fig, ax = plt.subplots(figsize=(6, 6))
+fig, ax = plt.subplots(figsize=(8, 6))
 
 
 ax.set(
-    xticks=range(-3, 2),
-    xticklabels=range(-3, 2),
+    xticks=range(-4, 2),
+    xlim=(-4,1),
+    xticklabels=range(-4, 2),
     yticks=range(-1, 3),
+    ylim=(-1,3),
     yticklabels=[-1, '', 1, 2],
     aspect='equal'
 )
@@ -78,11 +80,13 @@ plt.savefig("two_tangents.png", dpi=200, facecolor='white')
 
 @gif.frame
 def plot_frame(x):
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+
     ax.set(
-        xticks=range(-3, 2),
-        xlim=(-3, 2),
-        xticklabels=range(-3, 2),
+        xticks=range(-4, 2),
+        xlim=(-4, 1),
+        xticklabels=range(-4, 2),
         yticks=range(-1, 3),
         ylim=(-1, 3),
         yticklabels=[-1, '', 1, 2],
@@ -98,6 +102,7 @@ def plot_frame(x):
     plt.grid(which='both', ls='--', c='0.8')
 
     xs = np.arange(-3, 0.1, 0.01)
+    ys = f(xs)
     ax.plot(xs, ys, color='blue', label='$f(x)$')
 
     tangent_xs = np.arange(x-0.5, x+0.6, 0.1)
@@ -106,7 +111,7 @@ def plot_frame(x):
 
     ax.text(x=-1.5, y=-0.5, s=f"$x={x:.2f}$\n$f'(x) = {f1(x):.2f}$", size=16, color='g',
             bbox={'facecolor': 'white', 'alpha': 1, 'edgecolor': 'k', 'pad': 5}, ha='center', va='center')
-
+    plt.tight_layout()
 
 def calc_steps(start_x, gamma=0.001, f1=None, n=100):
     xs = [start_x]
@@ -116,10 +121,13 @@ def calc_steps(start_x, gamma=0.001, f1=None, n=100):
 
 
 # %%
-frames = [plot_frame(x) for x in calc_steps(start_x=-0.5, gamma=0.1, f1=f1, n=20)]
+frames = [plot_frame(x) for x in calc_steps(start_x=-0.1, gamma=0.1, f1=f1, n=20)]
 gif.save(frames, 'gradient_descent.gif', duration=300)
 
 
 #%%
-frames = [plot_frame(x) for x in calc_steps(start_x=-0.5, gamma=1.2, f1=f1, n=6)]
+frames = [plot_frame(x) for x in calc_steps(start_x=-0.1, gamma=0.7, f1=f1, n=6)]
 gif.save(frames, 'diverging_gradient_descent.gif', duration=500)
+
+#%%
+# plot_frame(-0.1)
